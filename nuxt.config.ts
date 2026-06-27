@@ -20,13 +20,6 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2026-06-27',
 
-  nitro: {
-    preset: 'cloudflare_pages_static',
-    prerender: {
-      autoSubfolderIndex: false
-    }
-  },
-
   eslint: {
     config: {
       stylistic: {
