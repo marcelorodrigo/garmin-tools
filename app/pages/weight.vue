@@ -80,8 +80,8 @@ function onSubmit(event: FormSubmitEvent<WeightFormState>) {
 <template>
   <div>
     <UPageHero
-      title="Weight FIT Generator"
-      description="Generate a Garmin Weight Scale FIT file from body composition data. Download a .fit file ready to import into Garmin Connect."
+      title="Weight Scale FIT Generator"
+      description="Generate a Garmin Weight Scale FIT file from body composition data. Fill in your metrics and download a .fit file ready to import into Garmin Connect."
     />
 
     <UForm
@@ -90,9 +90,12 @@ function onSubmit(event: FormSubmitEvent<WeightFormState>) {
       class="max-w-2xl mx-auto space-y-6 p-6"
       @submit="onSubmit"
     >
-      <UCard>
+      <UCard
+        class="border-t-2"
+        :style="{ borderTopColor: 'var(--ui-primary)' }"
+      >
         <template #header>
-          <h2 class="text-lg font-semibold">
+          <h2 class="text-lg font-semibold text-(--ui-primary)">
             Basic
           </h2>
         </template>
@@ -129,9 +132,12 @@ function onSubmit(event: FormSubmitEvent<WeightFormState>) {
         </div>
       </UCard>
 
-      <UCard>
+      <UCard
+        class="border-t-2"
+        :style="{ borderTopColor: 'var(--ui-primary)' }"
+      >
         <template #header>
-          <h2 class="text-lg font-semibold">
+          <h2 class="text-lg font-semibold text-(--ui-primary)">
             Body Composition
           </h2>
         </template>
@@ -211,9 +217,12 @@ function onSubmit(event: FormSubmitEvent<WeightFormState>) {
         </div>
       </UCard>
 
-      <UCard>
+      <UCard
+        class="border-t-2"
+        :style="{ borderTopColor: 'var(--ui-primary)' }"
+      >
         <template #header>
-          <h2 class="text-lg font-semibold">
+          <h2 class="text-lg font-semibold text-(--ui-primary)">
             Metabolic
           </h2>
         </template>
@@ -263,9 +272,12 @@ function onSubmit(event: FormSubmitEvent<WeightFormState>) {
         </div>
       </UCard>
 
-      <UCard>
+      <UCard
+        class="border-t-2"
+        :style="{ borderTopColor: 'var(--ui-primary)' }"
+      >
         <template #header>
-          <h2 class="text-lg font-semibold">
+          <h2 class="text-lg font-semibold text-(--ui-primary)">
             Ratings
           </h2>
         </template>
@@ -306,7 +318,7 @@ function onSubmit(event: FormSubmitEvent<WeightFormState>) {
       <div class="flex justify-end pt-4">
         <UButton
           type="submit"
-          size="lg"
+          size="xl"
           icon="i-lucide-download"
         >
           Generate FIT File

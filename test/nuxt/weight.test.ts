@@ -27,7 +27,7 @@ describe('weight page', () => {
   it('renders the Weight page hero section', async () => {
     const page = await mountPage()
 
-    expect(page.text()).toContain('Weight FIT Generator')
+    expect(page.text()).toContain('Weight Scale FIT Generator')
   })
 
   describe('validation', () => {
