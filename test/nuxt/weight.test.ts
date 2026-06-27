@@ -1,10 +1,14 @@
 import { describe, expect, it } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 
+async function mountPage() {
+  const mod = await import('~/pages/weight.vue')
+  return mountSuspended(mod.default)
+}
+
 describe('weight page', () => {
   it('renders all four section cards', async () => {
-    const mod = await import('~/pages/weight.vue')
-    const page = await mountSuspended(mod.default)
+    const page = await mountPage()
 
     const headings = page.findAll('h2')
     const labels = headings.map(h => h.text())
@@ -13,8 +17,7 @@ describe('weight page', () => {
   })
 
   it('renders a submit button', async () => {
-    const mod = await import('~/pages/weight.vue')
-    const page = await mountSuspended(mod.default)
+    const page = await mountPage()
 
     const button = page.find('button[type="submit"]')
     expect(button.exists()).toBe(true)
@@ -22,16 +25,14 @@ describe('weight page', () => {
   })
 
   it('renders the Weight page hero section', async () => {
-    const mod = await import('~/pages/weight.vue')
-    const page = await mountSuspended(mod.default)
+    const page = await mountPage()
 
     expect(page.text()).toContain('Weight FIT Generator')
   })
 
   describe('validation', () => {
     it('shows error when weight is missing', async () => {
-      const mod = await import('~/pages/weight.vue')
-      const page = await mountSuspended(mod.default)
+      const page = await mountPage()
 
       await page.find('form').trigger('submit')
       await new Promise(resolve => setTimeout(resolve, 50))
@@ -39,23 +40,34 @@ describe('weight page', () => {
       expect(page.text()).toContain('Weight is required')
     })
 
-    it('shows no errors when only required weight is provided', async () => {
-      const mod = await import('~/pages/weight.vue')
-      const page = await mountSuspended(mod.default)
-      const inputs = page.findAll('input')
+    it('shows error when weight is zero', async () => {
+      const page = await mountPage()
 
-      if (inputs.length > 0) {
-        await inputs[0].setValue(75)
-        await inputs[0].trigger('blur')
-        await new Promise(resolve => setTimeout(resolve, 50))
-      }
-
+      await setField(page, 0, '0')
       await page.find('form').trigger('submit')
       await new Promise(resolve => setTimeout(resolve, 50))
 
-      const text = page.text()
-      expect(text).not.toContain('Weight is required')
-      expect(text).not.toContain('must be')
+      expect(page.text()).toContain('Weight is required')
+    })
+
+    it('shows no errors when only required weight is provided', async () => {
+      const page = await mountPage()
+
+      await setField(page, 0, '75')
+      await page.find('form').trigger('submit')
+      await new Promise(resolve => setTimeout(resolve, 50))
+
+      expect(page.text()).not.toContain('Weight is required')
+      expect(page.text()).not.toContain('must be')
     })
   })
 })
+
+async function setField(page: Awaited<ReturnType<typeof mountPage>>, index: number, value: string) {
+  const inputs = page.findAll('input')
+  const input = inputs[index]
+  if (input) {
+    await input.setValue(value)
+    await input.trigger('blur')
+  }
+}
