@@ -8,6 +8,10 @@ export default defineNuxtConfig({
     enabled: true
   },
 
+  site: {
+    url: process.env.CF_PAGES_URL || 'http://localhost:3000'
+  },
+
   css: ['~/assets/css/main.css'],
 
   routeRules: {
@@ -17,7 +21,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-01-15',
 
   nitro: {
-    preset: 'cloudflare_pages',
+    preset: 'cloudflare_pages_static',
     prerender: {
       autoSubfolderIndex: false
     }
