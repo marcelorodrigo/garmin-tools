@@ -2,6 +2,15 @@
 export default defineNuxtConfig({
   modules: ['@nuxt/eslint', '@nuxt/ui', '@nuxtjs/seo'],
 
+  ssr: false,
+
+  nitro: {
+    preset: 'cloudflare_pages',
+    prerender: {
+      autoSubfolderIndex: false
+    }
+  },
+
   devtools: {
     enabled: true
   },
